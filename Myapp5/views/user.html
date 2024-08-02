@@ -1,0 +1,119 @@
+<%- include("include/header.ejs") -%>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>User Details</h1>
+    </div><!-- End Page Title -->
+
+    <% if (user) { %>
+        <section class="section mt-2">
+            <div class="container-fluid shadow pt-2 pb-2" style="background:#fff">
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <h5 class="card-title">Profile Details</h5>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Full Name</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.name %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Phone</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.phone %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Father Name</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.fatherName %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Email</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.email %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Address</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.address %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">PinCode</div>
+                        <div class="col-lg-9 col-md-8"><%= user.stepFormData.pinCode %></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+     
+
+        <section class="section mt-2">
+            <div class="container-fluid shadow pt-2 pb-2" style="background:#fff">
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <h5 class="card-title">Document Details</h5>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">User Photo</div>
+                        <div class="col-lg-9 col-md-8">
+                            <img src="/<%= user.joDocuments.userPhoto.replace(/\\/g, '/') %>" alt="User Photo" style="max-width: 20%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">AdhaarCard Front</div>
+                        <div class="col-lg-9 col-md-8">
+                            <img src="/<%= user.joDocuments.adhaarFront.replace(/\\/g, '/') %>" alt="AdhaarCard Front" style="max-width: 20%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">AdhaarCard Back</div>
+                        <div class="col-lg-9 col-md-8">
+                            <img src="/<%= user.joDocuments.adhaarBack.replace(/\\/g, '/') %>" alt="AdhaarCard Back" style="max-width: 20%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">PanCard Front</div>
+                        <div class="col-lg-9 col-md-8">
+                            <img src="/<%= user.joDocuments.panFront.replace(/\\/g, '/') %>" alt="PanCard Front" style="max-width: 20%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Signature</div>
+                        <div class="col-lg-9 col-md-8">
+                            <img src="/<%= user.joDocuments.Signature.replace(/\\/g, '/') %>" alt="Signature" style="max-width: 20%; height: auto;">
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </section>
+        <section class="section mt-2">
+            <div class="container-fluid shadow pt-2 pb-2" style="background:#fff">
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                    <h5 class="card-title">Loan Details</h5>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Loan Amount</div>
+                        <div class="col-lg-9 col-md-8"><%= user.step4Details.amount %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Duration</div>
+                        <div class="col-lg-9 col-md-8"><%= user.step4Details.years %> years</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Interest</div>
+                        <div class="col-lg-9 col-md-8"><%= user.loanTypeData.interest %>%</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 label">Monthly EMI</div>
+                        <div class="col-lg-9 col-md-8">
+                            <% 
+                                const P = parseFloat(user.step4Details.amount); // Principal loan amount
+                                const annualInterestRate = parseFloat(user.loanTypeData.interest); // Annual interest rate
+                                const r = (annualInterestRate / 100) / 12; // Monthly interest rate
+                                const n = parseFloat(user.step4Details.years) * 12; // Loan duration in months
+
+                                const emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+                            %>
+                            <%= emi.toFixed(2) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <% } else { %>
+        <div class="alert alert-danger">User not found</div>
+    <% } %>
+
+    <hr>
+</main>
+<%- include("include/footer.ejs") -%>

@@ -1,0 +1,198 @@
+<%-  include("include/header.ejs") -%>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Setting</h1>
+    
+    </div><!-- End Page Title -->
+    <div class="d-flex" style="justify-content: flex-end;">
+      <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add +</button>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+            
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Day1</th>
+                    <th scope="col">Day2</th>
+                    <th scope="col">Day3</th>
+                    <th scope="col">Day4</th>
+                    <th scope="col">Day5</th>
+                    <th scope="col">Day6</th>
+                    <th scope="col">Day7</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% dailybonsdatas.forEach(dailyBonus => { %>
+                      <td><%= dailyBonus.value %></td>
+                  <% }); %>
+                </tbody>               
+</table>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+<!-- deltet modal -->
+<div class="text-center">
+  <!-- Button HTML (to Trigger Modal) -->
+  <!-- <a >Click to Open Confirm Modal</a> -->
+</div>
+
+<!-- Modal HTML -->
+<div class="de">
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+    <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+   
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger delete-modal-btn" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- deltet modal -->
+
+
+
+<!-- START Modal ADD LOBBIES -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          
+          <div class="mb-3">
+            <label for="inputState">Day1 Bonus</label>
+            <input type="number" class="form-control" id="Day1bonus" name="Day1bonus" style="text-align: center;" placeholder="Day1">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day2 Bonus</label>
+            <input type="number" class="form-control" id="Day2bonus" name="Day2bonus" style="text-align: center;"  placeholder="Day2">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day3 Bonus</label>
+            <input type="number" class="form-control" id="Day3bonus" name="Day3bonus" style="text-align: center;"  placeholder="Day3">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day4 Bonus</label>
+            <input type="number" class="form-control" id="Day4bonus" name="Day4bonus" style="text-align: center;"  placeholder="Day4">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day5 Bonus</label>
+            <input type="number" class="form-control" id="Day5bonus" name="Day5bonus" style="text-align: center;"  placeholder="Day5">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day6 Bonus</label>
+            <input type="number" class="form-control" id="Day6bonus" name="Day6bonus" style="text-align: center;"  placeholder="Day6">
+          </div>
+          <div class="mb-3">
+            <label for="inputState">Day7 Bonus</label>
+              <input type="number" class="form-control" name="Day7bonus" style="text-align: center;" id="Day7bonus" placeholder="Day7">
+            </div>
+            <button class="btn btn-success" type="button" onclick="submitForm()"  style="background-color: green; color: aliceblue;">Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal ADD LOBBIES -->
+
+<!-- START Modal edit LOBBIES -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Slider</h5>
+      </div>
+      <div class="modal-body">
+        <form id="maileditFormupdate">
+          <div class="mb-3">
+            <input type="hidden" id="festivalIdInput" name="festivalIdInput">
+            <input type="hidden" id="festivalIdInputName" name="festivalIdInputName">
+            <input type="text" class="form-control" id="editMailName" name="editMailName" placeholder="Enter Festival Name">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="festivalBonusdata" name="festivalBonusdata" placeholder="Enter Festival Bonus">
+          </div>
+          <button type="submit" class="btn btn-success-save" style="background-color: green; color: aliceblue;">Save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal edit LOBBIES -->
+<script>
+ const submitForm = async()=> {
+    event.preventDefault();
+    const dayoneBonus = document.getElementById('Day1bonus').value;
+    const dayTwobonus = document.getElementById('Day2bonus').value;
+    const dayThreeBonus = document.getElementById('Day3bonus').value;
+    const dayFourBonus = document.getElementById('Day4bonus').value;
+    const dayfiveBonus = document.getElementById('Day5bonus').value;
+    const daysixbonus = document.getElementById('Day6bonus').value;
+    const daysevenbonus = document.getElementById('Day7bonus').value;
+    const formData = {
+      dayoneBonus,
+      dayTwobonus,
+      dayThreeBonus,
+      dayFourBonus,
+      dayfiveBonus,
+      daysixbonus,
+      daysevenbonus
+    };
+    fetch('http://localhost:8000/DailyBonusData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+     document.getElementById('Day1bonus').value="";
+    document.getElementById('Day2bonus').value="";
+    document.getElementById('Day3bonus').value="";
+    document.getElementById('Day4bonus').value="";
+    document.getElementById('Day5bonus').value="";
+    document.getElementById('Day6bonus').value="";
+    document.getElementById('Day7bonus').value="";
+    location.reload();
+      })
+      .catch(error => console.error('Error:', error));
+}
+    
+</script>
+
+  </main><!-- End #main -->
+  <!-- <script src="assets/js/main.js"></script> -->
+  
+<%- include("include/footer.ejs") -%>

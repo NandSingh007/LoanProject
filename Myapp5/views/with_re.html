@@ -1,0 +1,171 @@
+<%- include("include/header.ejs") -%>
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Data Tables</h1>
+  </div><!-- End Page Title -->
+
+  <div class="d-flex" style="justify-content: flex-end;">
+    <!-- <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add +</button> -->
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- Table with stripped rows -->
+            <table class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% profile.forEach((item, index) => { %>
+                  <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= item.phone %></td>
+                    <td><%= item.email %></td>
+                    <td>Request</td>
+                    <td><%= new Date(item.date).toLocaleDateString() %></td>
+                    <td>
+                     <i class="bi bi-pencil-square text-success" style="font-size:1.2rem;" data-toggle="modal" data-target="#exampleModal1" data-id="<%= item._id %>"></i>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delete Modal -->
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+        <div class="modal-body">
+          <p>Do you really want to delete these records? This process cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal ADD LOBBIES -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Lobbies</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">Action</label>
+              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Bot">
+            </div>
+            <button class="btn btn-success">Save</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal ADD LOBBIES -->
+
+  <!-- Modal edit LOBBIES -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Lobbies</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="approvalForm">
+            <input type="hidden" id="itemId" value="">
+            <div class="form-group col-md-12 mb-3">
+              <label for="inputState">Action</label>
+              <select id="inputState" class="form-control">
+                <option selected>Choose...</option>
+                <option value="approval">Approval</option>
+                <option value="Reject">Reject</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-success" onclick="submitApproval()">Save</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal edit LOBBIES -->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Handle opening the edit modal and setting the ID
+    $(document).on('click', '.bi-pencil-square', function() {
+      const id = $(this).data('id');
+      $('#itemId').val(id);
+      $('#exampleModal1').modal('show');
+    });
+
+    // Handle submitting the approval form
+    function submitApproval() {
+      const id = $('#itemId').val();
+      const action = $('#inputState').val();
+
+      // Map action to status
+      let status;
+      if (action === "approval") {
+        status = 1;
+      } else if (action === "Reject") {
+        status = 2;
+      } else {
+        alert('Please select a valid action.');
+        return;
+      }
+
+      console.log(id, status, "id, status"); // Log for debugging
+
+      $.ajax({
+        url: 'http://localhost:8000/updateProcessingFeeStatus', // Your endpoint for updating status
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ id, status }),
+        success: function(response) {
+        
+          location.reload(); // Reload page or update table without reload
+        },
+        error: function(error) {
+          console.error('Error updating status:', error);
+          alert('Error updating status.');
+        }
+      });
+    }
+  </script>
+
+</main><!-- End #main -->
+<%- include("include/footer.ejs") -%>

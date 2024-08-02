@@ -1,0 +1,338 @@
+<%-  include("include/header.ejs") -%>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Setting</h1>
+    
+    </div><!-- End Page Title -->
+    <div class="d-flex" style="justify-content: flex-end;">
+      <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add +</button>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+            
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Festival</th>
+                    <th scope="col">Bonus</th>
+                    <th scope="col">Date</th>
+                    <!-- <th scope="col">Mobile</th>
+                    <th scope="col">Email</th> -->
+                    <th scope="col">	Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% festivaldata.forEach((festival, index) => { %>
+                    <tr key="<%= index %>">
+                      <td><%= festival._id %></td>
+                      <td><%= festival.festivalbonusdataname %></td>
+                      <td><%= festival.festivalBonusdata %></td>
+                      <td><%= festival.date %></td>
+                      <td> 
+                        <% if (new Date(festival.date) <= new Date()) { %>
+                          <!-- Show "Claim" button if festival date is past or today -->
+                          <button class="btn btn-success" disabled>EXPIRED</button>
+                        <% } else { %>
+                          <!-- Show pencil icon for future dates -->
+                          <i class="bi bi-pencil-square text-success-update"
+                            style="font-size:1.2rem;" 
+                            data-index="<%= festival._id %>" 
+                            data-festivalbonusdataname="<%= festival.festivalbonusdataname %>"
+                            data-toggle="modal" 
+                            data-target="#exampleModal1">
+                          </i>
+                        <% } %>
+                        <!-- Add the trash icon for deleting -->
+                        <i class="bi bi-trash text-danger delete-btn" 
+                          style="font-size:1.2rem;margin-right:10px" 
+                          data-index="<%= festival._id %>" 
+                          data-festivalbonusdataname="<%= festival.festivalbonusdataname %>"
+                          data-toggle="modal" 
+                          data-target="#myModal">
+                        </i>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+                
+               
+</table>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+<!-- deltet modal -->
+<div class="text-center">
+  <!-- Button HTML (to Trigger Modal) -->
+  <!-- <a >Click to Open Confirm Modal</a> -->
+</div>
+
+<!-- Modal HTML -->
+<div class="de">
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+    <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+   
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger delete-modal-btn" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- deltet modal -->
+
+
+
+<!-- START Modal ADD LOBBIES -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="festivalbonusname" name="festivalbonusname"  placeholder="Festival Name">
+          </div>
+          <div class="mb-3">
+              <!-- <label for="formFileMultiple" class="form-label">Multiple files input example</label> -->
+              <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
+              <input type="text" class="form-control" name="festivalBonus" id="festivalBonus" placeholder="Fesitval Bonus">
+            </div>
+            <div class="mb-3">
+              <input type="date" class="form-control" name="festivalBonusdate" id="festivalBonusdate" placeholder="Select Festival Date" >
+          </div>
+            <button class="btn btn-success" type="button" onclick="submitForm()"  style="background-color: green; color: aliceblue;">Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal ADD LOBBIES -->
+
+<!-- START Modal edit LOBBIES -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Slider</h5>
+      </div>
+      <div class="modal-body">
+        <form id="maileditFormupdate">
+          <div class="mb-3">
+            <input type="hidden" id="festivalIdInput" name="festivalIdInput">
+            <input type="hidden" id="festivalIdInputName" name="festivalIdInputName">
+            <input type="text" class="form-control" id="editMailName" name="editMailName" placeholder="Enter Festival Name">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="festivalBonusdata" name="festivalBonusdata" placeholder="Enter Festival Bonus">
+          </div>
+          <button type="submit" class="btn btn-success-save" style="background-color: green; color: aliceblue;">Save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal edit LOBBIES -->
+<script>
+ const submitForm = async()=> {
+    event.preventDefault();
+    const festivalbonusname = document.getElementById('festivalbonusname');
+    const festivalBonus = document.getElementById('festivalBonus');
+    const datebonus = document.getElementById('festivalBonusdate');
+    const dateFestival = datebonus.value;
+    const festivalbonusdataname = festivalbonusname.value;
+    const festivalBonusdata = festivalBonus.value;
+
+    const formData = {
+      festivalbonusdataname,
+      festivalBonusdata,
+      dateFestival
+    };
+const url1 = 'http://localhost:8000/FestivalBonus';
+const url2 = 'http://localhost:8000/FestivalBonusforuser';
+    try {
+    const [response1, response2] = await Promise.all([
+      postData(url1, formData), // First POST request
+      postData(url2, formData) // Second POST request
+    ]);
+    document.getElementById('festivalbonusname').value = '';
+      document.getElementById('festivalBonus').value = '';
+      document.getElementById('festivalBonusdate').value = '';
+      // Disable close button
+      const closeButton = document.querySelector('.btn-secondary');
+      closeButton.setAttribute('disabled', true);
+      // Hide modal
+      $('#exampleModal1').modal('hide');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+  async function postData(url, data) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}
+
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Attach event listener to the pencil icons
+  document.querySelectorAll('.text-success-update').forEach(icon => {
+    icon.addEventListener('click', function(event) {
+      // Get the ID from the clicked pencil icon
+      const Id = this.getAttribute('data-index');
+      const festName = this.getAttribute('data-festivalbonusdataname');
+      // Set the ID value in the hidden input field
+      document.getElementById('festivalIdInput').value = Id;
+      document.getElementById('festivalIdInputName').value = festName;
+    });
+  });
+
+  // Attach event listener to the modal form submission
+  document.getElementById('maileditFormupdate').addEventListener('submit',async function (event) {
+    event.preventDefault();
+
+    const editMailName = document.getElementById('editMailName').value;
+    const festivalBonusdata = document.getElementById('festivalBonusdata').value;
+    const Id = document.getElementById('festivalIdInput').value;
+    const festName= document.getElementById('festivalIdInputName').value 
+
+    // Create FormData object to send data as multipart/form-data
+    const formData = {
+      festivalBonusdata,
+      editMailName,
+      festName,
+      Id
+    };
+    const url1 = 'http://localhost:8000/FestivalBonusEditInUser';
+const url2 = 'http://localhost:8000/FestivalBonusforuserEditInFestival';
+    try {
+    const [response1, response2] = await Promise.all([
+      postData(url1, formData), // First POST request
+      postData(url2, formData) // Second POST request
+    ]);
+    document.getElementById('editMailName').value = '';
+    document.getElementById('festivalBonusdata').value = '';
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+  async function postData(url, data) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}
+  });
+  document.addEventListener('click', function (event) {
+            document.querySelector('.btn-secondary').addEventListener('click', function() {
+                $('#exampleModal1').modal('hide');
+            });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function async() {
+    // Function to handle deletion of slider image
+    async function deleteSliderImage (Id,Name) {
+        const formData = {
+          Id,Name
+        };
+        // Send a POST request to delete the slider image
+        const url1 = 'http://localhost:8000/FestivalBonusDeleter';
+const url2 = 'http://localhost:8000/FestivalBonusforuserDelete';
+    try {
+    const [response1, response2] = await Promise.all([
+      postData(url1, formData), // First POST request
+      postData(url2, formData) // Second POST request
+    ]);
+    document.getElementById('editMailName').value = '';
+    document.getElementById('festivalBonusdata').value = '';
+
+      // Disable close button
+      const closeButton = document.querySelector('.btn-secondary');
+      closeButton.setAttribute('disabled', true);
+      // Hide modal
+      $('#myModal').modal('hide');
+      $('#exampleModal1').modal('hide');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+  async function postData(url, data) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}
+    }
+
+    // Event listener for delete button clicks
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const button = event.target;
+            const Id = button.getAttribute('data-index');
+            const Name = button.getAttribute('data-festivalbonusdataname');
+            // Open the delete confirmation modal
+            $('#myModal').modal('show');
+            // Event listener for delete confirmations
+            document.querySelector('.delete-modal-btn').addEventListener('click', function() {
+                // Call the function to delete the slider image
+                deleteSliderImage(Id ,Name);
+                // Close the modal
+                $('#myModal').modal('hide');
+            });
+        }
+    });
+});
+
+
+    
+</script>
+
+  </main><!-- End #main -->
+  <!-- <script src="assets/js/main.js"></script> -->
+  
+<%- include("include/footer.ejs") -%>

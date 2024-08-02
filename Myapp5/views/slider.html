@@ -1,0 +1,293 @@
+<%-  include("include/header.ejs") -%>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Setting</h1>
+    
+    </div><!-- End Page Title -->
+    <div class="d-flex" style="justify-content: flex-end;">
+      <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add +</button>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+            
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">	Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% ImgNotice.forEach((notice, index) => { %>
+                      <tr key="<%= index %>">
+                          <% notice.images.forEach((image, imageIndex) => { %>
+                              <td><%= image._id %></td>
+                              <td>
+                                  <% if (image.NoticeImg && image.NoticeName) { %>
+                                      <img src="data:image/png;base64,<%= Buffer.from(image.NoticeImg).toString('base64') %>" 
+                                          alt="<%= image.NoticeName %>" 
+                                          width="90" 
+                                          height="50">
+                                  <% } else { %>
+                                      <span>No Image</span>
+                                  <% } %>
+                              </td>
+                              <td><%= image.NoticeName %></td>
+                              <td> <!-- Move this part inside the inner loop -->
+                                  <i class="bi bi-trash text-danger delete-btn" 
+                                      style="font-size:1.2rem;margin-right:10px" 
+                                      data-carromId="<%= notice._id %>"
+                                      data-sliderImageIds="<%= image._id %>" 
+                                      data-toggle="modal" 
+                                      data-target="#myModal1"></i>
+                                  <i class="bi bi-pencil-square text-success-update"
+                                      style="font-size:1.2rem;" 
+                                      data-carromId="<%= notice._id %>"
+                                      data-sliderImageIds="<%= image._id %>" 
+                                      data-toggle="modal" 
+                                      data-target="#exampleModal1">
+                                  </i>
+                              </td>
+                          <% }); %>
+                      </tr>
+                  <% }); %>
+              </tbody>
+              
+              
+              
+</table>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+<!-- deltet modal -->
+<div class="text-center">
+  <!-- Button HTML (to Trigger Modal) -->
+  <!-- <a >Click to Open Confirm Modal</a> -->
+</div>
+
+<!-- Modal HTML -->
+
+<!-- Modal HTML -->
+<div class="de">
+  <div id="myModal1" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+      <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+        <div class="modal-body">
+          <p>Do you really want to delete these records? This process cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" >Cancel</button>
+          <button type="button" class="btn btn-danger delete-modal-btn2" data-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<!-- START Modal ADD LOBBIES -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  id="imageForm">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="imageName"  placeholder="Name">
+          </div>
+          <div class="mb-3">
+              <input class="form-control" type="file" id="imageFile"  accept="image/*">
+            </div>
+          <button type="submit" class="btn btn-success">Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div> 
+</div>
+<!-- end Modal ADD LOBBIES -->
+
+<!-- START Modal edit LOBBIES -->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="imageFormupdate" >
+          <div class="mb-3">
+            <input type="hidden" id="festivalIdInputid" name="festivalIdInputid">
+            <input type="hidden" id="festivalIdInputslider" name="festivalIdInputslider">
+            <input type="text" class="form-control" id="formGroupExampleInput" name="formGroupExampleInput" placeholder="Enter Image Name">
+          </div>
+          <div class="mb-3">
+            <input class="form-control" type="file" id="formFileMultiple" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-success-save" >Save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal edit LOBBIES -->
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('text-success-update')) {
+            const button = event.target;
+            let carromId = button.getAttribute('data-carromId');
+            let sliderImageIds = button.getAttribute('data-sliderImageIds');
+            
+            document.getElementById('festivalIdInputid').value = carromId;
+            document.getElementById('festivalIdInputslider').value = sliderImageIds;
+            // Remove square brackets and double quotes from sliderImageIds string
+           console.log(carromId,sliderImageIds)
+            // alert(carromId + ", " + sliderImageIds);
+        }
+    });
+
+document.getElementById('imageFormupdate').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Retrieve form data
+    const Name = document.getElementById('formGroupExampleInput').value;
+    const slideImg = document.getElementById('formFileMultiple').files[0];
+    const NticeinnerId = document.getElementById('festivalIdInputid').value;
+    const sliderImageIds = document.getElementById('festivalIdInputslider').value;
+    console.log(slideImg,Name,NticeinnerId,sliderImageIds)
+    // Create FormData object to send data as multipart/form-data
+    const formData = new FormData();
+    formData.append("NoticeName", Name);
+    formData.append("NoticeImg", slideImg);
+    formData.append("carromId", NticeinnerId);
+    formData.append("NoticeImageIds", sliderImageIds); // Append the sliderImageIds here
+  // console.log(formData)
+    // Fetch API to send the FormData object
+    fetch(`http://localhost:8000/NoticeUpdateImg`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Notice data updated successfully.');
+            location.reload()
+        } else {
+            console.log('Failed to update Notice data.');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating Notice data:', error);
+    });
+});
+
+   })
+
+
+  
+  document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener for form submission
+        document.getElementById('imageForm').addEventListener('submit', function (event) {
+            event.preventDefault(); 
+            const Name = document.getElementById('imageName').value;
+            const NoticeImg = document.getElementById('imageFile').files[0];
+            // Create FormData object to send data as multipart/form-data
+            // console.log(slideImg+"slideImgskkkkkkkkkkkkk")
+            const formData = new FormData();
+            formData.append("NoticeName", Name);
+            formData.append("NoticeImg", NoticeImg);
+            // Fetch API to send the FormData object
+            fetch(`http://localhost:8000/NoticeSlider`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Slider data sent successfully.');
+location.reload()
+                    } else {
+                        console.log('Failed to send slider data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending slider data:', error);
+                });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+    // Function to handle deletion of slider image
+    function deleteSliderImage(NticeinnerId, sliderImageIds) {
+        const formData = {
+          NticeinnerId,
+            sliderImageIds
+        };
+        fetch(`http://localhost:8000/NoticeDelteImg`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete slider image');
+            }
+            
+location.reload()
+        })
+        .catch(error => {
+            // Optionally, provide feedback to the user about the error
+            console.error('Error deleting slider image:', error);
+        });
+    }
+    let carromId, NoticeImageId;
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const button = event.target;
+            const NticeinnerId = button.getAttribute('data-carromId');
+            const sliderImageIdsss = button.getAttribute('data-sliderImageIds');
+            const sliderImageIds = sliderImageIdsss.replace(/[\[\]"]+/g, '');
+            $('#myModal1').modal('show');
+            
+            // Event listener for delete confirmation
+            document.querySelector('.delete-modal-btn2').addEventListener('click', function() {
+              deleteSliderImage(NticeinnerId, sliderImageIds) 
+                $('#myModal1').modal('hide');
+            });
+        }
+    });
+
+});
+
+</script>
+  </main><!-- End #main -->
+  <!-- <script src="assets/js/main.js"></script> -->
+  
+<%- include("include/footer.ejs") -%>

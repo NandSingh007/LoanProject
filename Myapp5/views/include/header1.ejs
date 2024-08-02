@@ -1,0 +1,73 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <% sidebarLinks.forEach(link => { %>
+      <% if (link.name === 'Logout') { %>
+        <!-- Display the logout link with a specific ID -->
+        <li class="nav-item">
+          <a id="logoutButton" class="nav-link <%= currentRoute === link.route ? 'active active-class' : 'collapsed' %>"
+            href="javascript:void(0);" onclick="toggleActivelogout()">
+            <i class="<%= link.icon %>"></i>
+            <span>
+              <%= link.name %>
+            </span>
+          </a>
+        </li>
+      <% } else if (Array.isArray(link.submenu)) { %>
+        <!-- Display a link with a submenu -->
+        <li class="nav-item">
+          <a class="nav-link <%= currentRoute === link.route ? 'active active-class' : 'collapsed' %>"
+            data-bs-toggle="collapse" href="#<%= link.name %>-submenu" onclick="toggleActive('<%= link.route %>')">
+            <i class="<%= link.icon %>"></i>
+            <span>
+              <%= link.name %>
+            </span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="<%= link.name %>-submenu"
+            class="nav-content collapse <%= currentRoute === link.route || link.submenu.some(sublink => currentRoute === sublink.route) ? 'show' : '' %>">
+            <% link.submenu.forEach(sublink => { %>
+              <li>
+                <a href="<%= sublink.route %>"
+                  class="<%= currentRoute === sublink.route ? 'active active-class' : 'collapsed' %>">
+                  <i class="<%= sublink.icon %>"></i>
+                  <%= sublink.name %>
+                </a>
+              </li>
+            <% }); %>
+          </ul>
+        </li>
+      <% } else { %>
+        <!-- Display a link without a submenu -->
+        <li class="nav-item">
+          <a class="nav-link <%= currentRoute === link.route ? 'active active-class' : 'collapsed' %>"
+            href="<%= link.route %>" onclick="toggleActive('<%= link.route %>')">
+            <i class="<%= link.icon %>"></i>
+            <span>
+              <%= link.name %>
+            </span>
+          </a>
+        </li>
+      <% } %>
+    <% }); %>
+  </ul>
+</aside>
+
+<!-- logout function destroying session -->
+<script>
+  async function toggleActivelogout() {
+    try {
+      const response = await fetch('http://localhost:8000/logout', {
+        method: 'POST',
+        credentials: 'include', // Include credentials if needed
+      });
+
+      if (response.ok) {
+        window.location.href = "/pages-login"; // Redirect to the login page
+      } else {
+        console.error('Logout failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  }
+</script>

@@ -1,0 +1,111 @@
+<%-  include("include/header.ejs") -%>
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Player</h1>
+    
+    </div><!-- End Page Title -->
+    <section class="section">
+    <div class="container-fluid shadow pt-2 pb-2" style="background:#fff">
+
+        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+          <h5 class="card-title">Profile Details</h5>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label ">Full Name</div>
+            <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-lg-3 col-md-4 label">Company</div>
+            <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-lg-3 col-md-4 label">Country</div>
+            <div class="col-lg-9 col-md-8">USA</div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Address</div>
+            <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Phone</div>
+            <div class="col-lg-9 col-md-8">(+91) 9876543210</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Email</div>
+            <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Wallet</div>
+            <div class="col-lg-9 col-md-8">15000</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Total Win</div>
+            <div class="col-lg-9 col-md-8">9000</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label">Total Lose</div>
+            <div class="col-lg-9 col-md-8">1400</div>
+          </div>
+        </div>
+    </section>
+    <section class="section mt-2">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+                <hr>
+            <center><h3>transaction History</h3></center>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Use</th>
+                    <th scope="col">amount</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">	Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Recharge</td>
+                    <td>2000</td>
+                    <td>12/12/2012</td>
+                    <td><i class="bi bi-check text-success" style="font-size:1.5rem"></i></td>
+                    <!-- <td><i class="bi bi-trash text-danger" style="font-sremize:1.2rem;margin-right:10px" href="#myModal" class="trigger-btn" data-toggle="modal"></i><i class="bi bi-pencil-square text-success" style="font-size:1.2rem;" data-toggle="modal" data-target="#exampleModal1"></i></td> -->
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Game</td>
+                    <td class="text-success">1100</td>
+                    <td>12/12/2023</td>
+                    <td><i class="bi bi-check text-success" style="font-size:1.5rem"></i></td>
+                    <!-- <td><i class="bi bi-trash text-danger" style="font-size:1.2rem;margin-right:10px"></i><a href="user.html"><i class="bi bi-pencil-square text-success" style="font-size:1.2rem;"></i></a></td> -->
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Withdrols</td>
+                    <td>1500</td>
+                    <td>11/14/2015</td>
+                    <td ><p class="text-danger" style="font-weight: 900;">X</p></td>
+                    <!-- <td><i class="bi bi-trash text-danger" style="font-size:1.2rem;margin-right:10px"></i><a href="user.html"><i class="bi bi-pencil-square text-success" style="font-size:1.2rem;"></i></a></td> -->
+                  </tr>
+              
+
+            </div>
+          </div>
+
+        </div>
+        
+      </div>
+    </section>
+<hr>
+
+</main>
+<%- include("include/footer.ejs") -%>

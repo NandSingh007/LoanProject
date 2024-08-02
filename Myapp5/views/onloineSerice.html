@@ -1,0 +1,438 @@
+<%-  include("include/header.ejs") -%>
+<script>
+
+</script>
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Setting</h1>
+    
+    </div><!-- End Page Title -->
+    <div>
+      <h1 style="text-align: center;">Online Service Of King Teen Patti</h1>
+    </div>
+    <div class="d-flex" style="justify-content: flex-end;">
+      <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add +</button>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+            
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mail Type</th>
+                    <th scope="col">Mail Text</th>
+                    <th scope="col">Date</th>
+                    <!-- <th scope="col">Mobile</th>
+                    <th scope="col">Email</th> -->
+                    <th scope="col">	Action</th>
+                  </tr>
+                </thead>
+               
+                <tbody>
+                  <% getOnlineServiceData.forEach((user, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index %></th>
+                        <td><%= user.Topic %></td>
+                        <td><%= user.TopicText %></td>
+                        <td><%= user.date %></td>
+                        <td>
+                          <i class="bi bi-trash text-danger delete-btn" 
+                             style="font-size:1.2rem;margin-right:10px" 
+                             data-index="<%= user._id %>"
+                             data-toggle="modal" 
+                             data-target="#myModal">
+                          </i>
+                          <i class="bi bi-pencil-square text-success-update"
+                             style="font-size:1.2rem;" 
+                             data-index="<%= user._id %>"
+                             data-toggle="modal" 
+                             data-target="#exampleModal1">
+                          </i>
+                        </td>
+                      </tr>
+                  <% }) %>
+                </tbody>
+                
+                
+</table>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+  </div><!-- End Page Title -->
+  <!-- <div>
+    <h1 style="text-align: center;">Single User Mail</h1>
+  </div> -->
+  <!-- <div class="d-flex" style="justify-content: flex-end;">
+  
+    <button class="btn btn-sm btn-success m-1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSingle">Add +</button>
+  </div> -->
+  <!-- <section class="section">
+    
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+          
+            <!-- Table with stripped rows -->
+            <!-- <table id="uniqueTableId" class="table datatable">
+              <thead>
+                <tr>
+                  <th scope="col">User_Id</th>
+                  <th scope="col">mailType</th>
+                  <th scope="col">MailTypetext</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+             Table body will be dynamically populated by JavaScript -->
+              <!-- </tbody>
+            </table> --> 
+            
+            
+
+          <!-- </div>
+        </div>
+
+      </div>
+    </div> -->
+  <!-- </section> -->
+<!-- deltet modal -->
+<div class="text-center">
+  <!-- Button HTML (to Trigger Modal) -->
+  <!-- <a >Click to Open Confirm Modal</a> -->
+</div>
+
+<!-- Modal HTML -->
+<div class="de">
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+    <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+    
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger delete-modal-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- deltet modal -->
+
+
+
+
+<!-- START Modal ADD LOBBIES -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div class="mb-3">
+            <input type="text" class="form-control" name="Topic" id="Topic" placeholder="Topic">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" id="Topictext" name="Topictext" placeholder="Topic Text"></textarea>
+        </div>        
+            <div class="mb-3">
+              <input type="date" class="form-control" name="Topicdate" id="Topicdate" >
+          </div>
+            <button class="btn btn-success" type="button" onclick="submitForm()">Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal ADD LOBBIES -->
+<!-- single user mail start -->
+
+<!-- START Modal ADD LOBBIES -->
+<div class="modal fade" id="exampleModalSingle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Mail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div class="mb-3">
+           
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" name="SingleMailTypeData" id="SingleMailTypeData" placeholder="MailType">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" id="SingleMailTypetext" name="SingleMailTypetext" placeholder="MailType Text"></textarea>
+        </div>        
+            <div class="mb-3">
+              <input type="date" class="form-control" name="SingleMailtextdate" id="SingleMailtextdate" placeholder="Mailtextdate">
+          </div>
+            <button class="btn btn-success" type="button" onclick="submitFormSingle()">Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal ADD LOBBIES -->
+<!-- single mail user end  -->
+<!-- START Modal edit LOBBIES -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Slider</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="maileditFormupdate" >
+          <div class="mb-3">
+            <input type="hidden" id="onlineserviceId" name="onlineserviceId">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" name="OnlineserviceTopic" id="OnlineserviceTopic" placeholder="OnlineService Topic">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" id="OnlineserviceText" name="OnlineserviceText" placeholder="Onlineservice Text"></textarea>
+        </div>  
+            <div class="mb-3">
+              <input type="date" class="form-control" name="Mailtextdateedit"  id="Mailtextdateedit" >
+          </div>
+          <button type="submit" class="btn btn-success-save" style="background-color: green; color: aliceblue;" >Save</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal edit LOBBIES -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all edit buttons
+    const editButtons = document.querySelectorAll(".bi-pencil-square");
+    // Add click event listener to each edit button
+    editButtons.forEach(function(button) {
+        button.addEventListener("click", async function() {
+            // Extract data from the row associated with the clicked button
+            const userId = button.dataset.index;
+            try {
+                // Fetch data from the API
+                // const resp = await axios.get(`http://localhost:8000/MailHistorySingleSchemaData${userId}`);
+                // const Mailldatacollection = resp.data;
+                // alert(Mailldatacollection)
+                // Set default values in modal form using fetched data
+                document.getElementById("MailTypeName").value = "Mailldatacollection.mailType";
+                document.getElementById("MailTypeedit").value = "Mailldatacollection.userId";
+                document.getElementById("MailTypetextedit").value =" Mailldatacollection.mailText";
+                document.getElementById("Mailtextdateedit").value = "Mailldatacollection.date";
+
+                // Show the modal
+                $("#exampleModal1").modal("show");
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // Handle errors if any
+            }
+        });
+    });
+});
+
+
+
+
+  
+  const submitForm = async() =>{
+    event.preventDefault();
+    const Topicdata = document.getElementById('Topic');
+    const Topictextdata = document.getElementById('Topictext');
+    const Topicdatedata = document.getElementById('Topicdate');
+    const Topic = Topicdata.value;
+    const Topictext = Topictextdata.value;
+    const Topicdate = Topicdatedata.value;
+
+    const formData = {
+      Topic,
+      Topictext,
+      Topicdate
+    };
+
+    fetch('http://localhost:8000/onlineservicedata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+       Topicdata.value="";
+       Topictextdata.value="";
+       Topicdatedata.value="";
+        // Enable the close button
+        const closeButton = document.querySelector('.btn-secondary');
+        closeButton.removeAttribute('disabled');
+        // Close the modal after successful submission
+        $('#exampleModalSingle').modal('hide');
+      })
+      .catch(error => console.error('Error:', error));
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.text-success-update').forEach(icon => {
+    icon.addEventListener('click', function(event) {
+      // Get the ID from the clicked pencil icon data-index
+      const Id = this.getAttribute('data-index');
+      // Set the ID value in the hidden input field
+      // alert(Id)
+      document.getElementById('onlineserviceId').value = Id;
+      
+    });
+  
+  });
+
+  document.getElementById('maileditFormupdate').addEventListener('submit', async function (event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+      
+    // Get form data
+    const OnlineserviceTopic = document.getElementById('OnlineserviceTopic').value;
+    const OnlineserviceText = document.getElementById('OnlineserviceText').value;
+    const Id = document.getElementById('onlineserviceId').value;
+
+    // Create FormData object to send data as multipart/form-data
+    const formData = {
+      OnlineserviceTopic,
+      OnlineserviceText,
+      Id
+    };  
+
+    try {
+      // Send POST request to the server
+      const response = await fetch('http://localhost:8000/onlineserviceEdit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Check if the request was successful
+      console.log(response);
+      if (response.ok) {
+        // Hide the modal and clear form fields
+        const modal = document.getElementById('exampleModal1');
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        document.getElementById('OnlineserviceTopic').value = "";
+        document.getElementById('OnlineserviceText').value = "";
+        // Reload the page to reflect changes
+        location.reload();
+      } else {
+        // Handle error if the request fails
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to handle deletion of slider image
+    function deleteDailyBonus(Id) {
+        const formData = {
+          Id
+        };
+        // console.log(formData)
+        // Send a POST request to delete the slider image
+        fetch(`http://localhost:8000/onlineserviceDelete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete DeleteDailyBounsAmount');
+            }
+            else{
+              location.reload()
+            }
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error deleting DeleteDailyBounsAmount:', error);
+        });
+    }
+
+    // Event listener for delete button clicks
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const button = event.target;
+            const Id = button.getAttribute('data-index');
+            $('#myModal').modal('show');
+            // Event listener for delete confirmations
+            document.querySelector('.delete-modal-btn').addEventListener('click', function() {
+                deleteDailyBonus(Id);
+                // Close the modal
+                $('#myModal').modal('hide');
+            });
+        }
+    });
+});
+
+
+
+
+
+</script>
+  </main><!-- End #main -->
+  <!-- <script src="assets/js/main.js"></script> -->
+  
+<%- include("include/footer.ejs") -%>
